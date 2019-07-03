@@ -13,7 +13,7 @@ We will generate cryptographic material for orderers, peers, administrators, and
 * https://cloud.ibm.com/docs/services/blockchain-icp-102/howto?topic=blockchain-icp-102-ca-operate#ca-operate-enroll-admin
 * https://hyperledger-fabric-ca.readthedocs.io/en/release-1.4/users-guide.html#manage-certificates
 * DB Browser SQLite
-* https://sqlitebrowser.org
+  https://sqlitebrowser.org
 * Fabric CA Client Setup
   https://medium.com/mlg-blockchain-consulting/fabric-ca-setup-client-852136f6a63c
 * Setting up Fabric-ca
