@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------------------
 # cd $FABRIC_CFG_PATH
-# Remove files and start over if required
+# Remove files if required
 # sudo find crypto-config -maxdepth 10 -type f -exec rm -fv {} \;
 # sudo find fabca -maxdepth 10 -type f -exec rm -fv {} \; 
 # 
@@ -9,9 +9,9 @@
 # cryptogen generate --config=./crypto-config.yaml
 # Remove all the crytographic material from the standard template run command below.
 # sudo find crypto-config -maxdepth 10 -type f -exec rm -fv {} \;
-# We will have empty directories structure as per the cryptogen template.
+# We will use the empty directories structure as per the cryptogen template.
 # ------------------------------------------------------------------------------------------------------
-# This is the list of manual steps that are required to generate a basic network using Fabric CA
+# Steps that are required to generate a basic network using Fabric CA
 # ------------------------------------------------------------------------------------------------------
 
 export FABRIC_CFG_PATH=$PWD
