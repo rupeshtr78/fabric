@@ -10,4 +10,6 @@ All identities that participate on a Hyperledger Fabric network must be authoriz
 * DB Browser SQLite
 * https://sqlitebrowser.org
 * Fabric CA Client Setup
-* https://medium.com/mlg-blockchain-consulting/fabric-ca-setup-client-852136f6a63c
+  https://medium.com/mlg-blockchain-consulting/fabric-ca-setup-client-852136f6a63c
+* Setting up Fabric-ca
+  https://gist.github.com/AkshayCHD/f7c96175dca1e5ab8d5785a3af0d5692
