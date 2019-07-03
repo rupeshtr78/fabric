@@ -1,0 +1,57 @@
+fabca
+├── fabric.com
+│   ├── ca-admin
+│   │   └── msp
+│   │       ├── cacerts
+│   │       ├── keystore
+│   │       ├── signcerts
+│   │       └── user
+│   ├── ca-server
+│   │   ├── ca
+│   │   └── msp
+│   │       ├── cacerts
+│   │       ├── keystore
+│   │       ├── signcerts
+│   │       └── user
+│   ├── tlsca-admin
+│   │   └── msp
+│   │       ├── cacerts
+│   │       ├── keystore
+│   │       ├── signcerts
+│   │       └── user
+│   └── tlsca-server
+│       ├── msp
+│       │   ├── cacerts
+│       │   ├── keystore
+│       │   ├── signcerts
+│       │   └── user
+│       └── tlsca
+└── po1.fabric.com
+    ├── ca-admin
+    │   └── msp
+    │       ├── cacerts
+    │       ├── keystore
+    │       ├── signcerts
+    │       └── user
+    ├── ca-server
+    │   ├── ca
+    │   └── msp
+    │       ├── cacerts
+    │       ├── keystore
+    │       ├── signcerts
+    │       └── user
+    ├── tlsca-admin
+    │   └── msp
+    │       ├── cacerts
+    │       ├── keystore
+    │       ├── signcerts
+    │       └── user
+    └── tlsca-server
+        ├── msp
+        │   ├── cacerts
+        │   ├── keystore
+        │   ├── signcerts
+        │   └── user
+        └── tlsca
+
+54 directories
