@@ -1,4 +1,4 @@
-## Generate HyperLedger Fabric Network Certificates and cryptographic materials using Fabric CA
+## Generate HyperLedger Network Identities and cryptographic materials using Fabric CA
 
 This project indents to  illustrate how to use Fabric CA to setup a Fabric network without using cryptogen. 
 This exercise is to give a better understanding of each identities and their associated cryptographic materials.
