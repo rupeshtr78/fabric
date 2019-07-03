@@ -5,7 +5,7 @@ All identities that participate on a Hyperledger Fabric network must be authoriz
 
 
 ## References
-https://cloud.ibm.com/docs/services/blockchain-icp-102/howto?topic=blockchain-icp-102-ca-operate#ca-operate-enroll-admin
+* https://cloud.ibm.com/docs/services/blockchain-icp-102/howto?topic=blockchain-icp-102-ca-operate#ca-operate-enroll-admin
 https://hyperledger-fabric-ca.readthedocs.io/en/release-1.4/users-guide.html#manage-certificates
 #DB Browser SQLite
 https://sqlitebrowser.org
