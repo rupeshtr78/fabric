@@ -1,0 +1,73 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+# Edit by Rupesh 06/09/2019
+# Added 
+# - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.Rtr3.fabric.com:13051
+# - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.Rtr3.fabric.com:12051
+#
+
+version: '2'
+
+services:
+
+  orderer1.fabric.com:
+    container_name: orderer1.fabric.com
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+        - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ../crypto-config/ordererOrganizations/fabric.com/orderers/orderer1.fabric.com/msp:/var/hyperledger/orderer/msp
+        - ../crypto-config/ordererOrganizations/fabric.com/orderers/orderer1.fabric.com/tls/:/var/hyperledger/orderer/tls
+        - orderer1.fabric.com:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+      - 9443:9443
+
+  peer0.po1.fabric.com:
+    container_name: peer0.po1.fabric.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.po1.fabric.com
+      - CORE_PEER_ADDRESS=peer0.po1.fabric.com:7051
+      - CORE_PEER_LISTENADDRESS=peer0.po1.fabric.com:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.po1.fabric.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=peer0.po1.fabric.com:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.po1.fabric.com:7053
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.po1.fabric.com:7051
+      - CORE_PEER_LOCALMSPID=po1MSP
+
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/po1.fabric.com/peers/peer0.po1.fabric.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/po1.fabric.com/peers/peer0.po1.fabric.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.po1.fabric.com:/var/hyperledger/production
+    ports:
+      - 7051:7051
+      - 9445:9445
+      
+  peer1.po1.fabric.com:
+    container_name: peer1.po1.fabric.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.po1.fabric.com
+      - CORE_PEER_ADDRESS=peer1.po1.fabric.com:7053
+      - CORE_PEER_LISTENADDRESS=peer1.po1.fabric.com:7053
+      - CORE_PEER_CHAINCODEADDRESS=peer1.po1.fabric.com:7054
+      - CORE_PEER_CHAINCODELISTENADDRESS=peer1.po1.fabric.com:7054
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.po1.fabric.com:7053
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.po1.fabric.com:7053
+      - CORE_PEER_LOCALMSPID=po1MSP
+
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/po1.fabric.com/peers/peer1.po1.fabric.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/po1.fabric.com/peers/peer1.po1.fabric.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.po1.fabric.com:/var/hyperledger/production
+    ports:
+      - 7053:7053

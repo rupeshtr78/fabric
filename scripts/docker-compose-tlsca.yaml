@@ -1,0 +1,47 @@
+version: '2'
+
+networks:
+  default:
+    external:
+      name: fab-net
+
+services:
+   tlsca.fabric.com:
+      container_name: tlsca.fabric.com
+      image: hyperledger/fabric-ca:amd64-1.4.2-snapshot-4289522
+      command: sh -c 'fabric-ca-server start -d -b tls-ord-admin:tls-ord-adminpw --port 7150 --cfg.identities.allowremove'
+      environment:
+         - FABRIC_CA_SERVER_HOME=/etc/hyperledger/fabric-ca
+         - FABRIC_CA_SERVER_TLS_ENABLED=true
+         - FABRIC_CA_SERVER_CA_NAME=tlsca.fabric.com
+         - FABRIC_CA_SERVER_CSR_CN=tlsca.fabric.com
+         - FABRIC_CA_SERVER_CSR_HOSTS=0.0.0.0
+         - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca/tlsca/tlsca.fabric.com-key.pem
+         - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca/tlsca/tlsca.fabric.com-cert.pem
+         - FABRIC_CA_SERVER_DEBUG=true
+      volumes:
+         - ../fabca/fabric.com/tlsca-server:/etc/hyperledger/fabric-ca
+         - ../crypto-config/ordererOrganizations/fabric.com/tlsca:/etc/hyperledger/fabric-ca/tlsca
+         - ../scripts:/scripts
+      ports:
+         - 7150:7150
+         
+   tlsca.po1.fabric.com:
+      container_name: tlsca.po1.fabric.com
+      image: hyperledger/fabric-ca:amd64-1.4.2-snapshot-4289522
+      command: sh -c 'fabric-ca-server start -d -b tls-peer-admin:tls-peer-adminpw --port 7151 --cfg.identities.allowremove'
+      environment:
+         - FABRIC_CA_SERVER_HOME=/etc/hyperledger/fabric-ca
+         - FABRIC_CA_SERVER_TLS_ENABLED=true
+         - FABRIC_CA_SERVER_CA_NAME=tlsca.po1.fabric.com
+         - FABRIC_CA_SERVER_CSR_CN=tlsca.po1.fabric.com
+         - FABRIC_CA_SERVER_CSR_HOSTS=0.0.0.0
+         - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca/tlsca/tlsca.po1.fabric.com-key.pem
+         - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca/tlsca/tlsca.po1.fabric.com-cert.pem
+         - FABRIC_CA_SERVER_DEBUG=true
+      volumes:
+         - ../fabca/po1.fabric.com/tlsca-server:/etc/hyperledger/fabric-ca
+         - ../crypto-config/peerOrganizations/po1.fabric.com/tlsca:/etc/hyperledger/fabric-ca/tlsca
+         - ../scripts:/scripts
+      ports:
+         - 7151:7151

@@ -1,0 +1,179 @@
+./crypto-config
+├── ordererOrganizations
+│   └── fabric.com
+│       ├── ca
+│       │   ├── ca.fabric.com-cert.pem
+│       │   └── ca.fabric.com-key.pem
+│       ├── msp
+│       │   ├── admincerts
+│       │   │   └── Admin@fabric.com.pem
+│       │   ├── cacerts
+│       │   │   └── 0-0-0-0-7152.pem
+│       │   ├── tlscacerts
+│       │   │   └── tls-0-0-0-0-7150.pem
+│       │   └── user
+│       ├── orderers
+│       │   └── orderer1.fabric.com
+│       │       ├── msp
+│       │       │   ├── admincerts
+│       │       │   │   └── Admin@fabric.com.pem
+│       │       │   ├── cacerts
+│       │       │   │   └── 0-0-0-0-7152.pem
+│       │       │   ├── IssuerPublicKey
+│       │       │   ├── IssuerRevocationPublicKey
+│       │       │   ├── keystore
+│       │       │   │   └── key.pem
+│       │       │   ├── signcerts
+│       │       │   │   └── cert.pem
+│       │       │   └── user
+│       │       └── tls
+│       │           ├── cacerts
+│       │           ├── IssuerPublicKey
+│       │           ├── IssuerRevocationPublicKey
+│       │           ├── keystore
+│       │           │   └── key.pem
+│       │           ├── signcerts
+│       │           │   └── cert.pem
+│       │           ├── tlscacerts
+│       │           │   └── tls-0-0-0-0-7150.pem
+│       │           └── user
+│       ├── tlsca
+│       │   ├── 2225be6cd3425abe1b44045cc598820fd4ae6532658a27b54aed17da6998e302_sk
+│       │   └── tlsca.fabric.com-cert.pem
+│       └── users
+│           └── Admin@fabric.com
+│               ├── msp
+│               │   ├── admincerts
+│               │   │   └── Admin@fabric.com.pem
+│               │   ├── cacerts
+│               │   │   └── 0-0-0-0-7152.pem
+│               │   ├── IssuerPublicKey
+│               │   ├── IssuerRevocationPublicKey
+│               │   ├── keystore
+│               │   │   └── key.pem
+│               │   ├── signcerts
+│               │   │   └── cert.pem
+│               │   ├── tlscacerts
+│               │   └── user
+│               └── tls
+│                   ├── cacerts
+│                   ├── IssuerPublicKey
+│                   ├── IssuerRevocationPublicKey
+│                   ├── keystore
+│                   │   └── key.pem
+│                   ├── signcerts
+│                   │   └── cert.pem
+│                   ├── tlscacerts
+│                   │   └── tls-0-0-0-0-7150.pem
+│                   └── user
+└── peerOrganizations
+    └── po1.fabric.com
+        ├── ca
+        │   ├── ca.po1.fabric.com-cert.pem
+        │   └── ca.po1.fabric.com-key.pem
+        ├── msp
+        │   ├── admincerts
+        │   │   └── Admin@po1.fabric.com.pem
+        │   ├── cacerts
+        │   │   └── 0-0-0-0-7153.pem
+        │   ├── tlscacerts
+        │   │   └── tls-0-0-0-0-7151.pem
+        │   └── user
+        ├── peers
+        │   ├── peer0.po1.fabric.com
+        │   │   ├── msp
+        │   │   │   ├── admincerts
+        │   │   │   │   └── Admin@po1.fabric.com.pem
+        │   │   │   ├── cacerts
+        │   │   │   │   └── 0-0-0-0-7153.pem
+        │   │   │   ├── config.yaml
+        │   │   │   ├── IssuerPublicKey
+        │   │   │   ├── IssuerRevocationPublicKey
+        │   │   │   ├── keystore
+        │   │   │   │   └── key.pem
+        │   │   │   ├── signcerts
+        │   │   │   │   └── cert.pem
+        │   │   │   ├── tlscacerts
+        │   │   │   └── user
+        │   │   └── tls
+        │   │       ├── cacerts
+        │   │       ├── IssuerPublicKey
+        │   │       ├── IssuerRevocationPublicKey
+        │   │       ├── keystore
+        │   │       │   └── key.pem
+        │   │       ├── signcerts
+        │   │       │   └── cert.pem
+        │   │       ├── tlscacerts
+        │   │       │   └── tls-0-0-0-0-7151.pem
+        │   │       └── user
+        │   └── peer1.po1.fabric.com
+        │       ├── msp
+        │       │   ├── admincerts
+        │       │   │   └── Admin@po1.fabric.com.pem
+        │       │   ├── cacerts
+        │       │   │   └── 0-0-0-0-7153.pem
+        │       │   ├── config.yaml
+        │       │   ├── IssuerPublicKey
+        │       │   ├── IssuerRevocationPublicKey
+        │       │   ├── keystore
+        │       │   │   └── key.pem
+        │       │   ├── signcerts
+        │       │   │   └── cert.pem
+        │       │   ├── tlscacerts
+        │       │   └── user
+        │       └── tls
+        │           ├── cacerts
+        │           ├── IssuerPublicKey
+        │           ├── IssuerRevocationPublicKey
+        │           ├── keystore
+        │           │   └── key.pem
+        │           ├── signcerts
+        │           │   └── cert.pem
+        │           ├── tlscacerts
+        │           │   └── tls-0-0-0-0-7151.pem
+        │           └── user
+        ├── tlsca
+        │   ├── tlsca.po1.fabric.com-cert.pem
+        │   └── tlsca.po1.fabric.com-key.pem
+        └── users
+            ├── Admin@po1.fabric.com
+            │   ├── msp
+            │   │   ├── admincerts
+            │   │   │   └── Admin@po1.fabric.com.pem
+            │   │   ├── cacerts
+            │   │   │   └── 0-0-0-0-7153.pem
+            │   │   ├── IssuerPublicKey
+            │   │   ├── IssuerRevocationPublicKey
+            │   │   ├── keystore
+            │   │   │   └── 935adc22ba79fe4005ede0e6ef22f26f801a818b043d689515631074ccb4d42c_sk
+            │   │   ├── signcerts
+            │   │   │   └── cert.pem
+            │   │   ├── tlscacerts
+            │   │   └── user
+            │   └── tls
+            │       ├── cacerts
+            │       ├── IssuerPublicKey
+            │       ├── IssuerRevocationPublicKey
+            │       ├── keystore
+            │       │   └── 57241a6950cea671ebb95d826b1b6e24b9c7208fbead8829abd50f2585bb43e0_sk
+            │       ├── signcerts
+            │       │   └── cert.pem
+            │       ├── tlscacerts
+            │       │   └── tls-0-0-0-0-7151.pem
+            │       └── user
+            └── User1@po1.fabric.com
+                ├── msp
+                │   ├── admincerts
+                │   ├── cacerts
+                │   │   └── 0-0-0-0-7153.pem
+                │   ├── IssuerPublicKey
+                │   ├── IssuerRevocationPublicKey
+                │   ├── keystore
+                │   │   └── 85a1ffe3427284c9facd4b4c9003a13dca3b4bfbbdb9ad9a35ed5884ce95a417_sk
+                │   ├── signcerts
+                │   │   └── cert.pem
+                │   ├── tlscacerts
+                │   └── user
+                └── tls
+
+100 directories, 76 files
