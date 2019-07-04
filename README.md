@@ -8,6 +8,9 @@ All identities that participate on a Hyperledger Fabric network must be authoriz
 We will see the process for setting up a basic fabric network that includes one organization,with two peers and one orderer.2 TLS CA servers and 2 CA Servers one CA each for peer org and orderer org.
 We will generate cryptographic material for orderers, peers, administrators, and end users in a TLS enabled single host environment.
 
+## Medium Article
+https://medium.com/@rupeshtr/hyperledger-using-fabric-ca-to-generate-cryptographic-materials-6af08cd29e81?source=friends_link&sk=d6fc25107c87d87910440e84ff1935cf
+
 
 ## References
 * https://cloud.ibm.com/docs/services/blockchain-icp-102/howto?topic=blockchain-icp-102-ca-operate#ca-operate-enroll-admin
