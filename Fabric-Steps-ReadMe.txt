@@ -57,7 +57,7 @@ docker-compose -f docker-compose-tlsca.yaml up tlsca.po1.fabric.com
 # fabric-ca-server init  creates server cert.pem and key.pem
 # fabric-ca-server start enrolls admin user creates admin cert.pem and key
 
-# Copy the keys
+# Copy the TLS CA Cert and Private Key 
 sudo cp fabric.com/tlsca-server/msp/keystore/23db0a**&&*&*&*bc527_sk  $FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/tlsca
 sudo cp po1.fabric.com/tlsca-server/msp/keystore/23db0a**&&*&*&*bc527_sk  $FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/tlsca
 # ------------------------------------------------------------------------------------------------------
@@ -110,11 +110,6 @@ fabric-ca-client register -d --id.name Admin@fabric.com --id.secret ordereradmin
 # ------------------------------------------------------------------------------------------------------	
 
 
-cd $FABRIC_CFG_PATH/scripts
-docker-compose -f rca-po1.yaml up
-docker-compose -f rca-po1.yaml down
-	
-
 export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/ca/ca.po1.fabric.com-cert.pem
 export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/ca-admin
 
@@ -144,7 +139,7 @@ fabric-ca-client enroll -d -u https://peer1.po1.fabric.com:peer2PW@0.0.0.0:7153 
 # Enroll and Get the TLS cryptographic material for the peer. 
 # This requires another enrollment,
 # Enroll against the ``tls`` profile on the TLS CA. 
-#Copy TLS CA from TLS if on another server.
+# Copy TLS CA from TLS if on another server.
 
 # cp $FABRIC_CFG_PATH/tls-rca/po1.fabric.com/tls/ca/server/tls-cert.pem $FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/tlsca
 export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/tlsca/tlsca.po1.fabric.com-cert.pem
@@ -158,7 +153,7 @@ fabric-ca-client enroll -d -u https://peer1.po1.fabric.com:peer0PW@0.0.0.0:7151 
 
 # rename keystore = key.pem
 
-# Mutuall TLS Enables then rename
+# Mutuall TLS Enabled then rename
 # tls/signcerts/cert.pem = server.crt
 # tls/keystore/key.pem = server.key
 # tls/tlscacerts/tls-0-0-0-0-7151.pem = ca.crt
@@ -166,7 +161,7 @@ fabric-ca-client enroll -d -u https://peer1.po1.fabric.com:peer0PW@0.0.0.0:7151 
 # ------------------------------------------------------------------------------------------------------
 # Enroll and Setup peer org Admin User
 # The admin identity is responsible for activities such as # installing and instantiating chaincode. 
-# The commands below assumes that this is being executed on Peer1's host machine.
+# The commands below assumes that this is being executed on Peer's host machine.
 # Fabric does this by Creating folder user/Admin@po1.fabric.com
 # ------------------------------------------------------------------------------------------------------
 
@@ -191,13 +186,13 @@ fabric-ca-client enroll -d -u https://User1@po1.fabric.com:po1UserPW@0.0.0.0:715
 # org, and it will need to go in to the ``admincerts`` folder of each peers' MSP.
 
 # --------------------------------------------------------------
-# Alternate Method manual copy
+# Alternate Method manual copy instead of fabric-ca-client identity list command
 mkdir $FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/peers/peer0.po1.fabric.com/msp/admincerts
 cp $FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/users/Admin@po1.fabric.com/msp/signcerts/cert.pem $FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/peers/peer0.po1.fabric.com/msp/admincerts
 
 # --------------------------------------------------------------
 # Enroll and Get the TLS cryptographic material for the Admin User
-## Enroll against the ``tls`` profile on the TLS CA. Using Tls cert.
+# Enroll against the ``tls`` profile on the TLS CA. Using Tls cert.
 
 export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/tlsca/tlsca.po1.fabric.com-cert.pem
 export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/tlsca-admin
@@ -205,7 +200,7 @@ export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/
 fabric-ca-client enroll -d -u https://Admin@po1.fabric.com:po1AdminPW@0.0.0.0:7151 --enrollment.profile tls 
 
 # ------------------------------------------------------------------------------------------------------
-# Launch Org1's Peers
+# Launch Peers
 # ------------------------------------------------------------------------------------------------------
 
 #peer1-org1.yaml
@@ -219,7 +214,7 @@ docker-compose -f docker-compose-cli.yaml up peer0.po1.fabric.com
 # ------------------------------------------------------------------------------------------------------------------------
 # Setup Orderer CA
 # ------------------------------------------------------------------------------------------------------------------------
-# Alternate Method manual copy
+
 
 export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/ca/ca.fabric.com-cert.pem
 export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/fabric.com/ca-admin
@@ -332,7 +327,7 @@ export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/tlsca-admin
 fabric-ca-client getcacert -u https://0.0.0.0:7151 -M $FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/msp --enrollment.profile tls
 
 # ------------------------------------------------------------------------------------------------------------------------
-# Create Peer config.yaml
+# Create Peer config.yaml for each peer
 #
 # cd ~/fabric01/rtr-fab-cr01
 # Edit Configtx.yaml
@@ -390,9 +385,8 @@ Create Channel
 # The ``channel.tx`` is an artifact that was generated by running the # ``configtxgen`` command on the orderer. 
 # This artifact needs to be transferred # to Peer1's host machine out-of-band from the orderer. 
 # The command peer channel create -c fabchannel01 will generate fabchannel01.block on Peer1 
-# At the specified output path ``/tmp/hyperledger/org1/peer1/assets/mychannel.block``,
-# which will be used by all peers in the network that wish # to join the channel. 
-# This ``fabchannel01.block`` will be need to transferred to all peers # in both Org1 and Org2 out-of-band.
+# which will be used by all peers in the network that wish to join the channel. 
+# This ``fabchannel01.block`` will be need to transferred to all peers # in each Org using out-of-band.
 ------------------------------------------------------------------------------------------------------------------------
 docker exec -it cli bash
 
