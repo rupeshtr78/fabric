@@ -267,14 +267,14 @@ fabric-ca-client enroll -d -u https://Admin@fabric.com:ordereradminpw@0.0.0.0:71
 # 3. The trusted root certificate of the TLS CA. 
 # The MSP folder structure can be seen below.
 
-   # /msp
-   # ├── admincerts
-   # │   └── admin-org-cert.pem
-   # ├── cacerts
-   # │   └── org-ca-cert.pem
-   # ├── tlscacerts
-   # │   └── tls-ca-cert.pem
-   # └── users
+  /msp
+  ├── admincerts
+  │   └── admin-org-cert.pem
+  ├── cacerts
+  │   └── org-ca-cert.pem
+  ├── tlscacerts
+  │   └── tls-ca-cert.pem
+  └── users
 # ---------------
 # ------------------------------------------------------------------------------------------------------------------------
 # Commands for gathering certificates
