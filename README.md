@@ -95,24 +95,22 @@ this CA .
 **Orderer org TLS :***Enroll the TLS CA server admin and then register
 org identities with orderer org's TLS CA server*
 
-> \# Register orderer org identities with the tls-ca
->
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/tlsca/tlsca.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/fabric.<span>com/tlsca-admin
->
-> fabric-ca-client **enroll** -d -u 
-> ht<span>tps://tls-ord-admin:tls-ord-adminpw@0.0.0.0:7150 
-> fabric-ca-client  **register** -d --id.<span>name **orderer1**.fabric.<span>com -- id.secret
-> ordererPW --id.type **orderer** -u ht<span>tps://0.0.0.0:7150
->
-> fabric-ca-client **register** -d --id.<span>name
-> **Admin**\@fabric.<span>com -- id.secret ordereradminpw --id.type **admin** -u
-> ht<span>tps://0.0.0.0:7150
->
-> Use command **fabric-ca-client identity list** or Gui DB Browser for
-> SQLite to verify the generated identities.
+```
+Register orderer org identities with the tls-ca
+
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto- 	config/ordererOrganizations/fabric.com/tlsca/tlsca.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/fabric.com/tlsca-admin
+
+fabric-ca-client enroll -d -u https://tls-ord-admin:tls-ord-adminpw@0.0.0.0:7150
+
+fabric-ca-client register -d — id.name orderer1.fabric.com — id.secret ordererPW — id.type orderer -u https://0.0.0.0:7150
+
+fabric-ca-client register -d — id.name Admin@fabric.com — id.secret ordereradminpw — id.type admin -u https://0.0.0.0:7150
+
+Use command fabric-ca-client identity list or Gui DB Browser for SQLite to verify the generated identities.
+```
+
+
 
 ![DB Browser
 SQLite](images/sqlite.png)
@@ -129,22 +127,19 @@ po1.fabric.<span>com up and running.Refer
 [docker-compose-tlsca.yaml](ht<span>tps://github.com/rupeshtr78/fabric/blob/master/scripts/docker-compose-tlsca.yaml) from repo.After the fabric server is up and running
 execute below scripts to register peer org identities
 
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/**tlsca**/tlsca.po1.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/po1.fabric.<span>com/tlsca-admin
->
-> fabric-ca-client enroll -d -u
-> <ht<span>tps://tls-peer-admin:tls-peer-adminpw@0.0.0.0:7151>\
-> fabric-ca-client register -d --id.<span>name peer0.po1.fabric.<span>com --
-> id.secret peer0PW --- id.type\
-> **peer** -u <ht<span>tps://0.0.0.0:7151>
->
-> fabric-ca-client register -d --id.<span>name peer1.po1.fabric.<span>com --
-> id.secret peer0PW -- id.type **peer** -u <ht<span>tps://0.0.0.0:7151>
->
-> fabric-ca-client register -d --id.<span>name Admin@po1.fabric.<span>com --
-> id.secret po1AdminPW -- id.type **admin** -u <ht<span>tps://0.0.0.0:7151>
+```bash
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/tlsca/tlsca.po1.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/tlsca-admin
+
+fabric-ca-client enroll -d -u https://tls-peer-admin:tls-peer-adminpw@0.0.0.0:7151
+fabric-ca-client register -d — id.name peer0.po1.fabric.com — id.secret peer0PW — id.type peer -u https://0.0.0.0:7151
+
+fabric-ca-client register -d — id.name peer1.po1.fabric.com — id.secret peer0PW — id.type peer -u https://0.0.0.0:7151
+
+fabric-ca-client register -d — id.name Admin@po1.fabric.com — id.secret po1AdminPW — id.type admin -u https://0.0.0.0:7151
+```
+
+
 
 **Certificate Authority (CA)**\
 Each organization must have it's own Certificate Authority (CA) for
@@ -158,53 +153,43 @@ material.
 **Orderer org CA:** *Enroll admin for the CA Server and register the
 Orderer and Admin user with the orderer org CA*
 
-> Orderer org :fabric.<span>com
->
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/**ca**/ca.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/fabric.<span>com/ca-admin
->
-> fabric-ca-client enroll -d -u
-> <ht<span>tps://rca-orderer-admin:rca-orderer-adminpw@0.0.0.0:7152>
->
-> fabric-ca-client register -d --id.<span>name orderer1.fabric.<span>com --
-> id.secret ordererpw -- id.type orderer -u <ht<span>tps://0.0.0.0:7152>
->
-> fabric-ca-client register -d -- id.<span>name <Admin@fabric.<span>com> --
-> id.secret ordereradminpw -- id.type admin -- id.attrs
-> "hf.Registrar.Roles=client,hf.Registrar.Attributes=\*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert"
-> -u <ht<span>tps://0.0.0.0:7152>
+```bash
+Orderer org :fabric
+
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/ca/ca.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/fabric.com/ca-admin
+
+fabric-ca-client enroll -d -u https://rca-orderer-admin:rca-orderer-adminpw@0.0.0.0:7152
+
+fabric-ca-client register -d — id.name orderer1.fabric.com — id.secret ordererpw — id.type orderer -u https://0.0.0.0:7152
+
+fabric-ca-client register -d — id.name Admin@fabric.com — id.secret ordereradminpw — id.type admin — id.attrs hf.Registrar.Roles=client,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert” -u https://0.0.0.0:7152
+```
+
+
 
 **Peer org CA:** *Enroll admin for the CA Server and register the peer0
 ,peer1 and Admin user with the peer org CA*
 
-> Peer org :po1.fabric.<span>com
->
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/ca/ca.po1.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/po1.fabric.<span>com/ca-admin
->
-> fabric-ca-client enroll -d -u
-> <ht<span>tps://rca-po1-admin:rca-po1-adminpw@0.0.0.0:7153>
->
-> fabric-ca-client register -d -- id.<span>name peer0.po1.fabric.<span>com ---
-> id.secret peer1PW --- id.type **peer** -u <ht<span>tps://0.0.0.0:7153>
->
-> fabric-ca-client register -d -- id.<span>name peer1.po1.fabric.<span>com --
-> id.secret peer2PW -- id.type **peer** -u <ht<span>tps://0.0.0.0:7153>
->
-> fabric-ca-client register -d -- id.<span>name Admin@po1.fabric.<span>com --
-> id.secret po1AdminPW -- id.type **admin** -- id.attrs
-> "hf.Registrar.Roles=client,hf.Registrar.Attributes=\*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert"
-> -u <ht<span>tps://0.0.0.0:7153>\
-> fabric-ca-client register -d -- id.<span>name\
-> <User1@po1.fabric.<span>com> -- id.secret po1UserPW -- id.type user -u
-> <ht<span>tps://0.0.0.0:7153>
->
-> Use command **fabric-ca-client identity list** or Gui DB Browser for
-> SQLite to verify the generated identities.
+```bash
+Peer org :po1.fabric.com
+
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/ca/ca.po1.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/ca-admin
+
+fabric-ca-client enroll -d -u https://rca-po1-admin:rca-po1-adminpw@0.0.0.0:7153
+
+fabric-ca-client register -d — id.name peer0.po1.fabric.com — id.secret peer1PW — id.type peer -u https://0.0.0.0:7153
+
+fabric-ca-client register -d — id.name peer1.po1.fabric.com — id.secret peer2PW — id.type peer -u https://0.0.0.0:7153
+
+fabric-ca-client register -d — id.name Admin@po1.fabric.com — id.secret po1AdminPW — id.type admin — id.attrs “hf.Registrar.Roles=client,hf.Registrar.Attributes=*,hf.Revoker=true,hf.GenCRL=true,admin=true:ecert,abac.init=true:ecert” -u https://0.0.0.0:7153
+fabric-ca-client register -d — id.name User1@po1.fabric.com — id.secret po1UserPW — id.type user -u https://0.0.0.0:7153
+
+Use command fabric-ca-client identity list or Gui DB Browser for SQLite to verify the generated identities.
+```
+
+
 
 **Enroll Peers**
 
@@ -224,30 +209,23 @@ the env variable FABRIC\_CA\_CLIENT\_MSPDIR for each peers **MSP**
 directory and then enroll.You can pass **-M** in command for msp dir as
 well.
 
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/ca/ca.po1.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/po1.fabric.<span>com/ca-admin
->
-> **\#Peer0:**\
-> export
-> FABRIC\_CA\_CLIENT\_MSPDIR=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/peers/\
-> **peer0**.po1.fabric.<span>com/msp\
-> fabric-ca-client enroll -d -u\
-> <ht<span>tps://peer0.po1.fabric.<span>com:peer1PW@0.0.0.0:7153> --- csr.hosts
-> peer0.po1.fabric.<span>com
->
-> **\#Peer1**
->
-> export
-> FABRIC\_CA\_CLIENT\_MSPDIR=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/peers/**peer1**.po1.fabric.<span>com/msp\
-> fabric-ca-client enroll -d -u\
-> <ht<span>tps://peer1.po1.fabric.<span>com:peer2PW@0.0.0.0:7153> --- csr.hosts
-> peer1.po1.fabric.<span>com
->
-> Verify the generation of certificates in msp/cacerts , keystore ,
-> signcerts for each peer's MSP directory.We just generated the local
-> peer MSP.
+```bash
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/ca/ca.po1.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/ca-admin
+
+#Peer0:
+export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/peers/peer0.po1.fabric.com/msp
+fabric-ca-client enroll -d -u https://peer0.po1.fabric.com:peer1PW@0.0.0.0:7153 — csr.hosts peer0.po1.fabric.com
+
+#Peer1
+
+export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/peers/peer1.po1.fabric.com/msp
+fabric-ca-client enroll -d -u https://peer1.po1.fabric.com:peer2PW@0.0.0.0:7153 — csr.hosts peer1.po1.fabric.com
+
+Verify the generation of certificates in msp/cacerts , keystore , signcerts for each peer’s MSP directory.We just generated the local peer MSP.
+```
+
+
 
 ![Peer Local
 MSP](images/localmsp.png)
@@ -259,25 +237,20 @@ certs.MSP directory here will be the peers **tls** directory.
 
 crypto-config/peerOrganizations/po1.fabric.<span>com/peers/peer0.po1.fabric.<span>com/**tls**
 
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/tlsca/tlsca.po1.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/po1.fabric.<span>com/tlsca-admin\
-> export
-> FABRIC\_CA\_CLIENT\_MSPDIR=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/peers/peer0.po1.fabric.<span>com/\
-> **tls**
->
-> fabric-ca-client enroll -d -u
-> <ht<span>tps://peer0.po1.fabric.<span>com:peer0PW@0.0.0.0:7151> --
-> enrollment.profile tls -- csr.hosts peer0.po1.fabric.<span>com
->
-> export
-> FABRIC\_CA\_CLIENT\_MSPDIR=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/peers/peer1.po1.fabric.<span>com/**tls**
->
-> \# **peer1**\
-> fabric-ca-client enroll -d -u\
-> <ht<span>tps://peer1.po1.fabric.<span>com:peer0PW@0.0.0.0:7151> --
-> enrollment.profile tls -- csr.hosts peer1.po1.fabric.<span>com
+```bash
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/tlsca/tlsca.po1.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/tlsca-admin
+export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/peers/peer0.po1.fabric.com/tls
+
+fabric-ca-client enroll -d -u https://peer0.po1.fabric.com:peer0PW@0.0.0.0:7151 — enrollment.profile tls — csr.hosts peer0.po1.fabric.com
+
+export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/peers/peer1.po1.fabric.com/tls
+
+# peer1
+fabric-ca-client enroll -d -u https://peer1.po1.fabric.com:peer0PW@0.0.0.0:7151 — enrollment.profile tls — csr.hosts peer1.po1.fabric.com
+```
+
+
 
 **Verify certificates** are generated in the peers **tls** directory
 tls/keystore , signcerts ,tlscacerts.Rename keystore private key to
@@ -292,25 +265,26 @@ instantiating chaincode. The commands below has to be executed on Peer's
 host machine if on seperate host.Admin user's MSP directory in our model
 is peerOrganizations/po1.fabric.<span>com/user/Admin\@po1.fabric.<span>com/msp
 
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/ca/ca.po1.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/po1.fabric.<span>com/ca-admin\
-> export
-> FABRIC\_CA\_CLIENT\_MSPDIR=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/users/Admin\@po1.fabric.<span>com/
-> **msp**
->
-> fabric-ca-client enroll -d -u
-> ht<span>tps://Admin@<span>po1.fabric.<span>com:po1AdminPW@0.0.0.0:7153
+```bash
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/ca/ca.po1.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/ca-admin
+export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/users/Admin@po1.fabric.com/msp
+
+fabric-ca-client enroll -d -u https://Admin@po1.fabric.com:po1AdminPW@0.0.0.0:7153
+```
+
+
 
 **AdminCerts**: As per user guide An identity becomes an "ADMIN" role by
 **adding the public certificate to the "admincerts" folder of the
 MSP**.You can manually copy signcerts to admin certs or run below store
 command.
 
-> fabric-ca-client certificate list --- id Admin\@po1.fabric.<span>com --
-> **store**
-> \$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/users/Admin\@po1.fabric.<span>com/msp/admincerts
+```bash
+fabric-ca-client certificate list — id Admin@po1.fabric.com — store $FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/users/Admin@po1.fabric.com/msp/admincerts
+```
+
+
 
 After enrollment, we should have an admin MSP.\
 Copy the **admincerts** certificate ***Admin\@po1.fabric.<span>com.pem*** from this
@@ -322,75 +296,64 @@ peers' MSP.
 **Enroll and Get the TLS cryptographic material for the Admin User**\
 Enroll against the TLS CA using Tls cert and home.\
 
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/tlsca/tlsca.po1.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/po1.fabric.<span>com/tlsca-admin\
-> export
-> FABRIC\_CA\_CLIENT\_MSPDIR=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/users/Admin\@po1.fabric.<span>com/ **tls**
->
-> fabric-ca-client enroll -d -u
-> ht<span>tps://Admin\@po1.fabric.<span>com:po1AdminPW\@0.0.0.0:7151 --
-> enrollment.profile tls
->
-> At this point we can test run our peers : docker-compose -f
-> docker-compose-cli.yaml up peer0.po1.fabric.<span>com
+```bash
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/tlsca/tlsca.po1.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/tlsca-admin
+export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/users/Admin@po1.fabric.com/tls
+
+fabric-ca-client enroll -d -u https://Admin@po1.fabric.com:po1AdminPW@0.0.0.0:7151 — enrollment.profile tls
+
+At this point we can test run our peers : docker-compose -f docker-compose-cli.yaml up peer0.po1.fabric.com
+```
+
+
 
 **Enroll Orderer with CA :** Enroll orderer1.fabric.<span>com and
 Admin\@fabric.<span>com with the CA
 
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/ca/ca.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/fabric.<span>com/ca-admin\
-> export
-> FABRIC\_CA\_CLIENT\_MSPDIR=\$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/orderers/orderer1.fabric.<span>com/msp\
->
-> fabric-ca-client **enroll** -d -u
-> ht<span>tps://orderer1.fabric.<span>com:ordererpw\@0.0.0.0:7152
->
-> **\#** Enroll Orderer's Admin User\
-> export
-> FABRIC\_CA\_CLIENT\_MSPDIR=\$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/users/Admin\@fabric.<span>com/msp
->
-> fabric-ca-client enroll -d -u
-> ht<span>tps://Admin\@fabric.<span>com:ordereradminpw\@0.0.0.0:7152
->
-> **\# Generate AdminCerts**\
-> fabric-ca-client identity list\
-> fabric-ca-client certificate list -- id Admin\@fabric.<span>com -- store
-> \$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/users/Admin\@fabric.<span>com/msp/admincerts\
->
-> **\# Copy Users AdminCerts** to Orderer MSP AdminCerts Directory\
-> cp
-> \$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/users/Admin\@fabric.<span>com/msp/admincerts/\*.pem
-> \$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/orderers/orderer1.fabric.<span>com/msp/admincerts\
->
-> **\#** rename keystore = key.pem
+```bash
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/ca/ca.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/fabric.com/ca-admin
+export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/orderers/orderer1.fabric.com/msp
+
+fabric-ca-client enroll -d -u https://orderer1.fabric.com:ordererpw@0.0.0.0:7152
+
+# Enroll Orderer’s Admin User
+export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/users/Admin@fabric.com/msp
+
+fabric-ca-client enroll -d -u https://Admin@fabric.com:ordereradminpw@0.0.0.0:7152
+
+# Generate AdminCerts
+fabric-ca-client identity list
+fabric-ca-client certificate list — id Admin@fabric.com — store $FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/users/Admin@fabric.com/msp/admincerts
+
+# Copy Users AdminCerts to Orderer MSP AdminCerts Directory
+cp $FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/users/Admin@fabric.com/msp/admincerts/*.pem $FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/orderers/orderer1.fabric.com/msp/admincerts
+
+# rename keystore = key.pem
+```
+
+
 
 **Enroll Orderer with TLS CA**
 
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/tlsca/tlsca.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/fabric.<span>com/tlsca-admin\
-> export
-> FABRIC\_CA\_CLIENT\_MSPDIR=\$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/orderers/orderer1.fabric.<span>com/tls
->
-> fabric-ca-client enroll -d -u
-> ht<span>tps://orderer1.fabric.<span>com:ordererPW\@0.0.0.0:7150 --
-> enrollment.profile tls -- csr.hosts orderer1.fabric.<span>com
->
-> **\#** Enroll Orderer's Admin User
->
-> export
-> FABRIC\_CA\_CLIENT\_MSPDIR=\$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/users/Admin\@fabric.<span>com/tls
->
-> fabric-ca-client enroll -d -u
-> ht<span>tps://Admin\@fabric.<span>com:ordereradminpw\@0.0.0.0:7150 --
-> enrollment.profile tls -- csr.hosts orderer1.fabric.<span>com
->
-> \# rename keystore -sk= key.pem
+```bash
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/tlsca/tlsca.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/fabric.com/tlsca-admin
+export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/orderers/orderer1.fabric.com/tls
+
+fabric-ca-client enroll -d -u https://orderer1.fabric.com:ordererPW@0.0.0.0:7150 — enrollment.profile tls — csr.hosts orderer1.fabric.com
+
+# Enroll Orderer’s Admin User
+
+export FABRIC_CA_CLIENT_MSPDIR=$FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/users/Admin@fabric.com/tls
+
+fabric-ca-client enroll -d -u https://Admin@fabric.com:ordereradminpw@0.0.0.0:7150 — enrollment.profile tls — csr.hosts orderer1.fabric.com
+
+# rename keystore -sk= key.pem
+```
+
+
 
 **Create Genesis Block and Channel Transaction artifacts**
 
@@ -410,52 +373,43 @@ the following structure:
 
 **Generate Orderer Org MSP**
 
-> **\# cacerts --- orderer**\
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/ca/ca.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/fabric.<span>com/ca-admin\
-> fabric-ca-client getcacert -u ht<span>tps://0.0.0.0:7152 -M
-> \$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/msp
->
-> **\# AdminCerts --- orderer**\
-> fabric-ca-client identity list\
-> fabric-ca-client certificate list -- id Admin\@fabric.<span>com -- store
-> \$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/msp/admincerts
->
-> **\# tlscacerts --- orderer**\
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/tlsca/tlsca.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/fabric.<span>com/tlsca-admin\
-> fabric-ca-client getcacert -u ht<span>tps://0.0.0.0:7150 -M
-> \$FABRIC\_CFG\_PATH/crypto-config/ordererOrganizations/fabric.<span>com/msp
-> -- enrollment.profile tls
+```
+# cacerts — orderer
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/ca/ca.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/fabric.com/ca-admin
+fabric-ca-client getcacert -u https://0.0.0.0:7152 -M $FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/msp
+
+# AdminCerts — orderer
+fabric-ca-client identity list
+fabric-ca-client certificate list — id Admin@fabric.com — store $FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/msp/admincerts
+
+# tlscacerts — orderer
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/tlsca/tlsca.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/fabric.com/tlsca-admin
+fabric-ca-client getcacert -u https://0.0.0.0:7150 -M $FABRIC_CFG_PATH/crypto-config/ordererOrganizations/fabric.com/msp — enrollment.profile tls
+```
+
+
 
 **Generate Peer Org MSP**
 
-> **\# cacerts --- peer org**\
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/ca/ca.po1.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/po1.fabric.<span>com/ca-admin\
-> fabric-ca-client getcainfo -u ht<span>tps://0.0.0.0:7153 -M
-> \$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/msp
->
-> **\# AdminCerts --- peer org**\
-> fabric-ca-client identity list\
-> fabric-ca-client certificate list -- id Admin\@po1.fabric.<span>com --
-> store
-> \$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/msp/admincerts
->
-> **\# tlscacerts --- peer org**\
-> export
-> FABRIC\_CA\_CLIENT\_TLS\_CERTFILES=\$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/tlsca/tlsca.po1.fabric.<span>com-cert.pem\
-> export
-> FABRIC\_CA\_CLIENT\_HOME=\$FABRIC\_CFG\_PATH/fabca/po1.fabric.<span>com/tlsca-admin\
-> fabric-ca-client getcacert -u ht<span>tps://0.0.0.0:7151 -M
-> \$FABRIC\_CFG\_PATH/crypto-config/peerOrganizations/po1.fabric.<span>com/msp
-> -- enrollment.profile tls
+```bash
+# cacerts — peer org
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/ca/ca.po1.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/ca-admin
+fabric-ca-client getcainfo -u https://0.0.0.0:7153 -M $FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/msp
+
+# AdminCerts — peer org
+fabric-ca-client identity list
+fabric-ca-client certificate list — id Admin@po1.fabric.com — store $FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/msp/admincerts
+
+# tlscacerts — peer org
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/tlsca/tlsca.po1.fabric.com-cert.pem
+export FABRIC_CA_CLIENT_HOME=$FABRIC_CFG_PATH/fabca/po1.fabric.com/tlsca-admin
+fabric-ca-client getcacert -u https://0.0.0.0:7151 -M $FABRIC_CFG_PATH/crypto-config/peerOrganizations/po1.fabric.com/msp — enrollment.profile tls
+```
+
+
 
 The above steps should generate the model similar to the [**directory
 tree**](ht<span>tps://github.com/rupeshtr78/fabric/blob/master/logs/tree-crypto-config.txt) in repo.
@@ -466,74 +420,80 @@ tree**](ht<span>tps://github.com/rupeshtr78/fabric/blob/master/logs/tree-crypto-
 Create
 [configtx.yaml](ht<span>tps://github.com/rupeshtr78/fabric/blob/master/configtx.yaml) file as per your model.
 
-> cd \$FABRIC\_CFG\_PATH\
-> **\# Create the orderer genesis.block**\
-> configtxgen -profile OneOrgsOrdererGenesis -channelID rtr-sys-channel
-> -outputBlock \$FABRIC\_CFG\_PATH/channel-artifacts/genesis.block\
-> configtxgen -inspectBlock ./channel-artifacts/genesis.block \>
-> logs/genesisblock.txt
->
-> **\# Create channel.tx**\
-> export CHANNEL\_NAME=fabchannel01\
-> configtxgen -profile OneOrgsChannel
-> -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID
-> \$CHANNEL\_NAME\
-> configtxgen -inspectChannelCreateTx ./channel-artifacts/channel.tx \>
-> logs/channel.txt
+```bash
+cd $FABRIC_CFG_PATH
+# Create the orderer genesis.block
+configtxgen -profile OneOrgsOrdererGenesis -channelID rtr-sys-channel -outputBlock $FABRIC_CFG_PATH/channel-artifacts/genesis.block
+configtxgen -inspectBlock ./channel-artifacts/genesis.block > logs/genesisblock.txt
 
-> **\# Update anchor peers**\
-> configtxgen -profile OneOrgsChannel
-> -outputAnchorPeersUpdate ./channel-artifacts/po1MSPanchors.tx
-> -channelID \$CHANNEL\_NAME -asOrg po1MSP
+# Create channel.tx
+export CHANNEL_NAME=fabchannel01
+configtxgen -profile OneOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
+configtxgen -inspectChannelCreateTx ./channel-artifacts/channel.tx > logs/channel.txt
+# Update anchor peers
+configtxgen -profile OneOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/po1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg po1MSP
+```
+
+
 
 **Start the services**
 
 Lets start services one by one :- Start the Orderer : [docker-compose -f
-docker-compose-cli.yaml up
-orderer1.fabric.<span>com](ht<span>tps://github.com/rupeshtr78/fabric/blob/master/docker-compose-cli.yaml)
+docker-compose-cli.yaml up orderer1.fabric.<span>com](ht<span>tps://github.com/rupeshtr78/fabric/blob/master/docker-compose-cli.yaml)
 
-![Order
-Start](images/orderer-start.png)
+
+
+![](images/orderer-starts.png)
+
+​                                                                          *Orderer Start*
 
 ![Peer Start Gossip Protocol
 Working](images/peer-start.png)
 
+​	                                                                            *Peer Start*
+
+​                                   
+
 **Create and join Channel**
 
-> export CHANNEL\_NAME=fabchannel01
->
-> peer channel create -c \$CHANNEL\_NAME -f
-> /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/channel.tx
-> -o orderer1.fabric.<span>com:7050 -- outputBlock
-> /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/fabchannel01.block
-> -- tls -- cafile
-> /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fabric.<span>com/users/Admin\@fabric.<span>com/tls/tlscacerts/tls-0--0--0--0--7150.pem
-> 60s
->
-> peer channel join -b
-> /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/fabchannel01.block
-> 30s
+```bash
+export CHANNEL_NAME=fabchannel01
+
+peer channel create -c $CHANNEL_NAME -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/channel.tx -o orderer1.fabric.com:7050 — outputBlock /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/fabchannel01.block — tls — cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fabric.com/users/Admin@fabric.com/tls/tlscacerts/tls-0–0–0–0–7150.pem 60s
+
+peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/fabchannel01.block 30s
+```
+
+
 
 ![Peer Join](images/peer-join.png)
 
-> **Install and Instantiate Chaincode**
->
-> peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/abac/go
->
-> peer chaincode instantiate -C \$CHANNEL\_NAME -n mycc -v 1.0 -c
-> '{"Args":\["init","a", "100", "b","200\"\]}' -o
-> orderer1.fabric.<span>com:7050 -- tls -- cafile
-> /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fabric.<span>com/users/Admin\@fabric.<span>com/tls/tlscacerts/tls-0--0--0--0--7150.pem
-> 60s
+​																			*ChainCode Install*
+
+```
+Install and Instantiate Chaincode
+
+peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/abac/go
+
+peer chaincode instantiate -C $CHANNEL_NAME -n mycc -v 1.0 -c ‘{“Args”:[“init”,”a”, “100”, “b”,”200"]}’ -o orderer1.fabric.com:7050 — tls — cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/fabric.com/users/Admin@fabric.com/tls/tlscacerts/tls-0–0–0–0–7150.pem 60s
+```
+
+
 
 ![Chaincode
 Instantiate](images/cacc-Instantiate.png)
 
+​                                                                             *ChainCode Instantiate*
+
 ![Chaincode
 Invoke](images/cacc-invoke.png)
 
+​																			 *ChainCode Invoke*
+
 ![Chaincode
 Query](images/ca-cc-query.png)
+
+​																				*ChainCode Query*
 
 ![peer channel fetch newest 
 ](images/peer-fetch-png.png)
