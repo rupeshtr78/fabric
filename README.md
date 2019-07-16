@@ -39,7 +39,8 @@ We will generate the model as shown below using Fabric CA.
 These are the main steps that are required to generate the cryptograhic materials for each identity.
 > 1. **Setup TLS CA Server**
 > 2. **Setup CA Server**
-> ** After configuring and starting the TLS and CA servers its mainly two steps.**
+
+> **After configuring and starting the TLS and CA servers its mainly two steps**
 > 
 > \(1) **Register** identities (orderers, peers ,admins,users) with TLS and
 > CA servers
