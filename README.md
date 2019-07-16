@@ -35,6 +35,20 @@ We will generate the model as shown below using Fabric CA.
     certificate public key.
 -   **tlscacerts** (optional) a folder to include PEM files each
     corresponding to a TLS root CA's certificate
+    
+    
+> **Setup TLS CA Server**
+> **Setup CA Server**
+>** After configuring and starting the TLS and CA servers its mainly two steps.**
+> 
+> \(1) **Register** identities (orderers, peers ,admins,users) with TLS and
+> CA servers
+> 
+> \(2) **Enroll** those identities by pointing to their relevant msp
+> directory for generating CA certificates and to the **tls** directory for generating TLS certificates
+> as per your model.These two steps creates all the cryptographic material
+> for each identity in the network.
+> 
 
 **Step : Setting up the Fabric CA**
 
@@ -78,16 +92,6 @@ listening to your the port 7150 in this case.
 At this point the TLA CA server is listening on a secure socket, and can
 start issuing TLS certificates.
 
-> **After starting the TLS and CA servers its mainly two steps.**
-> 
-> \(1) **Register** identities (orderers, peers ,admins,users) with TLS and
-> CA servers
-> 
-> \(2) **Enroll** those identities by pointing to their relevant msp
-> directory for generating CA certificates and to the **tls** directory for generating TLS certificates
-> as per your model.These two steps creates all the cryptographic material
-> for each identity in the network.
-> 
 If on different host machines the trusted root certificate for the TLS
 CA has to be copied to other host machines that will communicate with
 this CA .
