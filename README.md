@@ -36,7 +36,7 @@ We will generate the model as shown below using Fabric CA.
 -   **tlscacerts** (optional) a folder to include PEM files each
     corresponding to a TLS root CA's certificate
     
-# These are the main steps that are required to generate the cryptograhic materials for each identity.
+**These are the main steps that are required to generate the cryptograhic materials for each identity.**
 > (1)  **Setup TLS CA Server**
 > (2)  **Setup CA Server**
 
